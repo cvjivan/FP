@@ -21,14 +21,7 @@ public class ConnectFour{
 	}
 	
 	public void run() {
-		System.out.println("    1   2   3   4   5   6   7");
-		for (int i = 0; i < 6; i++) {
-			System.out.print(i+1 + " | ");
-			for (int j = 0; j < 7; j++) {
-				System.out.print(array[i][j] + " | ");
-			}
-			System.out.println();
-		}
+		print();
 		System.out.println("Pick a column to place your marker in:");
 		Scanner scan = new Scanner(System.in);
 		String input = scan.nextLine();	
@@ -42,24 +35,27 @@ public class ConnectFour{
 	}
 	
 	public void play() {
-		boolean x = false;
 		System.out.println("Welcome to Connect Four!");
 		run();
-		while (!win(x)) {
+		while (!win(place(), scannerInput - 1)) {
+			this.counter--;
 			if (scannerInput <= 7 && scannerInput >= 1) {
 				if (check(scannerInput) >= 0) {
 					array[check(scannerInput)][scannerInput-1] = place();
+					this.counter--;
+					if (win(place(), scannerInput - 1)){
+						print();
+						break;
+					}
 					run();
 					which();
 				}else {
 					System.out.println("This array is full.");
-					x = true;
 					which();
 					play();
 				}
 			}else {
 				System.out.println("Number has to be between 1 and 7!");
-				x = true;
 				which();
 				play();
 			}
@@ -78,9 +74,32 @@ public class ConnectFour{
 		return x;
 	}
 	
-	//change later
-	public boolean win(boolean x) {
-		return x;
+	public void print() {
+		System.out.println("    1   2   3   4   5   6   7");
+		for (int i = 0; i < 6; i++) {
+			System.out.print(i+1 + " | ");
+			for (int j = 0; j < 7; j++) {
+				System.out.print(array[i][j] + " | ");
+			}
+			System.out.println();
+		}
+	}
+	//change
+	public boolean win(String player, int col) {
+		int count = 0;
+		for (int j = 5; j >= 0 ; j--) {
+			if (array[j][col].equals(player)) {
+				count++;
+			} else {
+				count = 0;
+			}
+			if (count == 4) {
+				System.out.println("Congrats Player " + player + "on winning");
+				return true;
+
+			}
+		}
+		return false;
 	}
 	
 	public void which() {
