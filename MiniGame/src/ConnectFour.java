@@ -20,6 +20,10 @@ public class ConnectFour{
 		this.counter = 0;
 	}
 	
+	public void setUp(Players one, Players two) {
+		
+	}
+	
 	public void run() {
 		print();
 		System.out.println("Pick a column to place your marker in:");
