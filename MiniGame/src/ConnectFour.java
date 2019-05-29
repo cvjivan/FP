@@ -99,6 +99,22 @@ public class ConnectFour{
 
 			}
 		}
+		for (int j = 5; j >= 0; j--) { 
+			for (int i = 0; i < 4 ; i++) {
+				count = 0;
+				for (int x = 0; x < 4; x++){
+					if (array[j][i+x].equals(player)) {
+						count++;
+					} else {
+						count = 0;
+					}
+					if (count == 4) {
+						System.out.println("Congrats Player " + player + " on winning");
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 	
