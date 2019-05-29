@@ -29,16 +29,16 @@ public class ConnectFour{
 		System.out.println("Pick a column to place your marker in:");
 		Scanner scan = new Scanner(System.in);
 		String input = scan.nextLine().replaceAll(" ", "");	
-		System.out.println(input);
+		System.out.println(input);	
+		for (int i = 0; i < 40; i++){
+			System.out.println();
+		}
 		try {
 			this.scannerInput = Integer.parseInt(input);
 		}catch(NumberFormatException e) {
 			System.out.println("Choose a column!");
-		}
-		for (int i = 0; i < 40; i++){
-			System.out.println();
-		}
-	
+			run();
+		}	
 	}
 	
 	public void play() {
