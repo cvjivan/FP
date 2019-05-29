@@ -28,18 +28,20 @@ public class ConnectFour{
 		print();
 		System.out.println("Pick a column to place your marker in:");
 		Scanner scan = new Scanner(System.in);
-		String input = scan.nextLine();	
+		String input = scan.nextLine().replaceAll(" ", "");	
+		System.out.println(input);
 		try {
 			this.scannerInput = Integer.parseInt(input);
 		}catch(NumberFormatException e) {
 			System.out.println("Choose a column!");
 		}
-		
+		for (int i = 0; i < 40; i++){
+			System.out.println();
+		}
 	
 	}
 	
 	public void play() {
-		System.out.println("Welcome to Connect Four!");
 		run();
 		while (!win(place(), scannerInput - 1)) {
 			this.counter--;
@@ -90,70 +92,74 @@ public class ConnectFour{
 	}
 	//change
 	public boolean win(String player, int col) {
-		int count = 0;
-		for (int j = 5; j >= 0 ; j--) {
-			if (array[j][col].equals(player)) {
-				count++;
-			} else {
-				count = 0;
-			}
-			if (count == 4) {
-				System.out.println("Congrats Player " + player + "on winning");
-				return true;
+		
+		try {
+			int count = 0;
+			for (int j = 5; j >= 0 ; j--) {
+				if (array[j][col].equals(player)) {
+					count++;
+				} else {
+					count = 0;
+				}
+				if (count == 4) {
+					System.out.println("Congrats Player " + player + "on winning");
+					return true;
 
+				}
 			}
-		}
-		for (int j = 5; j >= 0; j--) { 
-			for (int i = 0; i < 4 ; i++) {
-				count = 0;
-				for (int x = 0; x < 4; x++){
-					if (array[j][i+x].equals(player)) {
-						count++;
-					} else {
-						count = 0;
-					}
-					if (count == 4) {
-						System.out.println("Congrats Player " + player + " on winning");
-						return true;
+			for (int j = 5; j >= 0; j--) { 
+				for (int i = 0; i < 4 ; i++) {
+					count = 0;
+					for (int x = 0; x < 4; x++){
+						if (array[j][i+x].equals(player)) {
+							count++;
+						} else {
+							count = 0;
+						}
+						if (count == 4) {
+							System.out.println("Congrats Player " + player + " on winning");
+							return true;
+						}
 					}
 				}
 			}
-		}
-		for (int j = 5; j >= 3; j--) { 
-			for (int i = 0; i < 4 ; i++) {
-				count = 0;
-				for (int x = 0; x < 4; x++){
-					if (array[j-x][i+x].equals(player)) {
-						count++;
-					} else {
-						count = 0;
-					}
-					if (count == 4) {
-						System.out.println("Congrats Player " + player + " on winning");
-						return true;
-					}
-				}
-			}
-		}
-		for (int j = 5; j >= 3; j--) { 
-			for (int i = 3; i < 7 ; i++) {
-				count = 0;
-				for (int x = 0; x < 4; x++){
-					if (array[j-x][i-x].equals(player)) {	
-						count++;
-						System.out.println(count);
-
-					} else {
-						count = 0;
-					}
-					if (count == 4) {
-						System.out.println("Congrats Player " + player + " on winning");
-						return true;
+			for (int j = 5; j >= 3; j--) { 
+				for (int i = 0; i < 4 ; i++) {
+					count = 0;
+					for (int x = 0; x < 4; x++){
+						if (array[j-x][i+x].equals(player)) {
+							count++;
+						} else {
+							count = 0;
+						}
+						if (count == 4) {
+							System.out.println("Congrats Player " + player + " on winning");
+							return true;
+						}
 					}
 				}
 			}
+			for (int j = 5; j >= 3; j--) { 
+				for (int i = 3; i < 7 ; i++) {
+					count = 0;
+					for (int x = 0; x < 4; x++){
+						if (array[j-x][i-x].equals(player)) {	
+							count++;
+						} else {
+							count = 0;
+						}
+						if (count == 4) {
+							System.out.println("Congrats Player " + player + " on winning");
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}catch(ArrayIndexOutOfBoundsException a) {
+			return false;
 		}
-		return false;
+		
 	}
 	
 	public void which() {
