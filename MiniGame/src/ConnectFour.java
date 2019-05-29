@@ -115,6 +115,40 @@ public class ConnectFour{
 				}
 			}
 		}
+		for (int j = 5; j >= 3; j--) { 
+			for (int i = 0; i < 4 ; i++) {
+				count = 0;
+				for (int x = 0; x < 4; x++){
+					if (array[j-x][i+x].equals(player)) {
+						count++;
+					} else {
+						count = 0;
+					}
+					if (count == 4) {
+						System.out.println("Congrats Player " + player + " on winning");
+						return true;
+					}
+				}
+			}
+		}
+		for (int j = 5; j >= 3; j--) { 
+			for (int i = 3; i < 7 ; i++) {
+				count = 0;
+				for (int x = 0; x < 4; x++){
+					if (array[j-x][i-x].equals(player)) {	
+						count++;
+						System.out.println(count);
+
+					} else {
+						count = 0;
+					}
+					if (count == 4) {
+						System.out.println("Congrats Player " + player + " on winning");
+						return true;
+					}
+				}
+			}
+		}
 		return false;
 	}
 	
