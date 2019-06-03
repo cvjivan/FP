@@ -8,6 +8,8 @@ public class ConnectFour{
     public boolean playerTwo;
     public int counter;
     public boolean win;
+    public boolean z;
+    public String who;
 	
 	public ConnectFour() {
 		for (int i = 0; i < 6; i++) {
@@ -66,7 +68,12 @@ public class ConnectFour{
 				play();
 			}
 		}
-		
+	}
+	
+	public void after() {
+		if (z) {
+			System.out.println("Congrats Player " + who + " on winning");
+		}
 	}
 	
 	public int check(int col) {
@@ -92,7 +99,8 @@ public class ConnectFour{
 	}
 	//change
 	public boolean win(String player, int col) {
-		
+		z = false;
+		who = player;
 		try {
 			int count = 0;
 			for (int j = 5; j >= 0 ; j--) {
@@ -102,8 +110,7 @@ public class ConnectFour{
 					count = 0;
 				}
 				if (count == 4) {
-					System.out.println("Congrats Player " + player + "on winning");
-					return true;
+					z = true;
 
 				}
 			}
@@ -117,8 +124,7 @@ public class ConnectFour{
 							count = 0;
 						}
 						if (count == 4) {
-							System.out.println("Congrats Player " + player + " on winning");
-							return true;
+							z = true;
 						}
 					}
 				}
@@ -133,8 +139,7 @@ public class ConnectFour{
 							count = 0;
 						}
 						if (count == 4) {
-							System.out.println("Congrats Player " + player + " on winning");
-							return true;
+							z = true;
 						}
 					}
 				}
@@ -149,13 +154,12 @@ public class ConnectFour{
 							count = 0;
 						}
 						if (count == 4) {
-							System.out.println("Congrats Player " + player + " on winning");
-							return true;
+							z = true;
 						}
 					}
 				}
 			}
-			return false;
+			return z;
 		}catch(ArrayIndexOutOfBoundsException a) {
 			return false;
 		}

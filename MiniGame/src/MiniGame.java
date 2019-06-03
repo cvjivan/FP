@@ -8,5 +8,6 @@ public class MiniGame {
 		System.out.println("Welcome to Connect Four!");
 		ConnectFour game = new ConnectFour();
 		game.play();
+		game.after();
 	}
 }
