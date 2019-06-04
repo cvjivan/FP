@@ -2,37 +2,39 @@ import java.util.*;
 
 public class ConnectFour{
 	
-    String array[][] = new String[6][7]; 
-    public int scannerInput;
-    public boolean playerOne;
-    public boolean playerTwo;
-    public int counter;
-    public boolean win;
-    public boolean z;
-    public String who;
-	
-	public ConnectFour() {
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 7; j++) {
+    String array[][] = new String[10][10]; 
+    private int scannerInput;
+    private boolean playerOne;
+    private boolean playerTwo;
+    private int counter;
+    private boolean win;
+    private boolean z;
+    private String who;
+    private int cols;
+    private int rows;
+	//constructor 
+	public ConnectFour(int rows, int cols) {
+	    this.array= new String[rows][cols]; 
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
 				array[i][j] = " ";
 			}
 		}
 		this.playerOne = true;
 		this.playerTwo = false;
 		this.counter = 0;
+		this.cols = cols;
+		this.rows = rows;
 	}
 	
-	public void setUp(Players one, Players two) {
-		
-	}
-	
+	//checks value the user inputs
 	public void run() {
 		print();
 		System.out.println("Pick a column to place your marker in:");
 		Scanner scan = new Scanner(System.in);
 		String input = scan.nextLine().replaceAll(" ", "");	
 		System.out.println(input);	
-		for (int i = 0; i < 40; i++){
+		for (int i = 0; i < 400; i++){
 			System.out.println();
 		}
 		try {
@@ -47,7 +49,7 @@ public class ConnectFour{
 		run();
 		while (!win(place(), scannerInput - 1)) {
 			this.counter--;
-			if (scannerInput <= 7 && scannerInput >= 1) {
+			if (scannerInput <= cols && scannerInput >= 1) {
 				if (check(scannerInput) >= 0) {
 					array[check(scannerInput)][scannerInput-1] = place();
 					this.counter--;
@@ -63,22 +65,23 @@ public class ConnectFour{
 					play();
 				}
 			}else {
-				System.out.println("Number has to be between 1 and 7!");
+				System.out.println("Number has to be between 1 and " + cols + "!");
 				which();
 				play();
 			}
 		}
 	}
-	
+	//prints who wins 
 	public void after() {
 		if (z) {
 			System.out.println("Congrats Player " + who + " on winning");
 		}
-	}
+	} 
 	
+	//Returns the first empty index of the row from the col given
 	public int check(int col) {
 		int x = -1;
-		for (int i = 5; i >= 0; i--) {
+		for (int i = rows - 1; i >= 0; i--) {
 			if (array[i][col-1].equals(" ")) {
 				x = i;
 				i = -1;
@@ -86,24 +89,41 @@ public class ConnectFour{
 		}
 		return x;
 	}
-	
+	//Prints out the Array
 	public void print() {
-		System.out.println("    1   2   3   4   5   6   7");
-		for (int i = 0; i < 6; i++) {
-			System.out.print(i+1 + " | ");
-			for (int j = 0; j < 7; j++) {
+		System.out.print(" ");
+		for (int j = 1; j <= cols; j++) {
+			if (j == 100) {
+				System.out.print(" ");
+			}
+			if (j >= 100) {
+				System.out.print(" " + j);
+			} else if (j >= 10) {
+				System.out.print("  " + j );
+			} else {
+				System.out.print("   " + j);
+			}
+		}
+		System.out.println("");
+		for (int i = 0; i < rows; i++) {
+			if (i >= 9) {
+				System.out.print(i+1 + "| ");
+			} else {
+				System.out.print(i+1 + " | ");
+			}
+			for (int j = 0; j < cols; j++) {
 				System.out.print(array[i][j] + " | ");
 			}
 			System.out.println();
 		}
 	}
-	//change
+	//All of the checks determining if the player wins
 	public boolean win(String player, int col) {
 		z = false;
 		who = player;
 		try {
 			int count = 0;
-			for (int j = 5; j >= 0 ; j--) {
+			for (int j = rows - 1 ; j >= 0 ; j--) {
 				if (array[j][col].equals(player)) {
 					count++;
 				} else {
@@ -114,8 +134,8 @@ public class ConnectFour{
 
 				}
 			}
-			for (int j = 5; j >= 0; j--) { 
-				for (int i = 0; i < 4 ; i++) {
+			for (int j = rows - 1; j >= 0; j--) { 
+				for (int i = 0; i < cols - 3; i++) {
 					count = 0;
 					for (int x = 0; x < 4; x++){
 						if (array[j][i+x].equals(player)) {
@@ -129,8 +149,8 @@ public class ConnectFour{
 					}
 				}
 			}
-			for (int j = 5; j >= 3; j--) { 
-				for (int i = 0; i < 4 ; i++) {
+			for (int j = rows - 1; j >= 3; j--) { 
+				for (int i = 0; i < cols - 3 ; i++) {
 					count = 0;
 					for (int x = 0; x < 4; x++){
 						if (array[j-x][i+x].equals(player)) {
@@ -144,8 +164,8 @@ public class ConnectFour{
 					}
 				}
 			}
-			for (int j = 5; j >= 3; j--) { 
-				for (int i = 3; i < 7 ; i++) {
+			for (int j = rows - 1; j >= 3; j--) { 
+				for (int i = 3; i < cols ; i++) {
 					count = 0;
 					for (int x = 0; x < 4; x++){
 						if (array[j-x][i-x].equals(player)) {	
@@ -165,7 +185,7 @@ public class ConnectFour{
 		}
 		
 	}
-	
+	//Changes who's turn it is
 	public void which() {
 		if (counter % 2 == 0) {
 			this.playerOne = true;
@@ -175,7 +195,7 @@ public class ConnectFour{
 			this.playerTwo = true;
 		}
 	}
-	
+	//Figures out who's turn it is
 	public String place() {
 		if (playerOne) {
 			this.counter++;
